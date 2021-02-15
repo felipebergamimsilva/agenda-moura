@@ -1,0 +1,53 @@
+﻿@model agenda.Models.HomeModel
+@{
+    ViewBag.Title = "Agenda";
+}
+
+<h2>
+    Contatos
+    @Html.ActionLink("Novo Contato", "Create", null, new { @class = "btn btn-success btn-xs" })
+</h2>
+
+@if (TempData["mensagem"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        @TempData["mensagem"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @if (Model.Contatos.Any())
+        {
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contato in Model.Contatos)
+                    {
+                        <tr>
+                            <td>@contato.Nome</td>
+                            <td>@contato.Telefone</td>
+                            <td>@contato.Endereco</td>
+                            <td style="width: 150px;">
+                                @Html.ActionLink("Editar", "Edit", new { @id = contato.Id }, new { @class = "btn btn-primary btn-xs" })
+                                @Html.ActionLink("Excluir", "Delete", new { @id = contato.Id }, new { @class = "btn btn-danger btn-xs" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Não foi encontrado nenhum registro.</p>
+        }
+    </div>
+</div>
